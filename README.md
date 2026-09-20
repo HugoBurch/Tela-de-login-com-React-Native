@@ -1,56 +1,103 @@
-# Welcome to your Expo app 👋
+# Telas de Login e Cadastro
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Trabalho prático de desenvolvimento mobile com **React Native** e **Expo Router**. O app tem duas telas, **Login** e **Cadastro**, com formulários controlados, validação por campo, navegação entre rotas e persistência local dos usuários.
 
-## Get started
+## Funcionalidades
 
-1. Install dependencies
+### Tela de Login (`/`)
+- Campos de **usuário** e **senha** (oculta com `secureTextEntry`)
+- Validação por campo, com mensagem de erro abaixo de cada um
+- Autenticação contra a lista de usuários cadastrados (AsyncStorage)
+- Mensagem de erro geral quando usuário ou senha estão incorretos
+- Link **"Ainda não tem conta? Cadastre-se"** para a tela de Cadastro
 
-   ```bash
-   npm install
-   ```
+### Tela de Cadastro (`/cadastro`)
+- Campos de **nome completo**, **e-mail**, **usuário**, **senha** e **confirmar senha**
+- Validação por campo (veja a tabela abaixo)
+- Bloqueio de usuário e e-mail duplicados
+- Mensagem de confirmação e retorno automático ao Login após o cadastro
+- Link **"Já tem conta? Fazer login"** e seta de voltar no topo
 
-2. Start the app
+## Regras de validação
 
-   ```bash
-   npx expo start
-   ```
+| Tela | Campo | Regra |
+|---|---|---|
+| Login | Usuário | Obrigatório |
+| Login | Senha | Obrigatória |
+| Cadastro | Nome completo | Obrigatório, com nome e sobrenome |
+| Cadastro | E-mail | Obrigatório, com formato válido (regex) e único |
+| Cadastro | Usuário | Obrigatório, com pelo menos 3 caracteres e único |
+| Cadastro | Senha | Obrigatória, com pelo menos 6 caracteres |
+| Cadastro | Confirmar senha | Obrigatória e igual à senha |
 
-In the output, you'll find options to open the app in a
+Os erros aparecem sem uso de `alert`, direto na tela, e somem quando o usuário volta a digitar no campo.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Tecnologias
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/) e [Expo Router](https://docs.expo.dev/router/introduction/)
+- [@react-native-async-storage/async-storage](https://react-native-async-storage.github.io/async-storage/)
 
-## Get a fresh project
+## Estrutura do projeto
 
-When you're ready, run:
+Dentro da pasta de rotas (`app/` ou `src/app/`):
 
-```bash
-npm run reset-project
+```
+app/
+├── _layout.js    -> gerencia o cabeçalho de todas as telas (oculto)
+├── index.js      -> tela de Login (rota "/")
+└── cadastro.js   -> tela de Cadastro (rota "/cadastro")
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Como executar
 
-### Other setup steps
+**Pré-requisitos:** Node.js instalado e o app **Expo Go** no celular (ou um emulador Android/iOS).
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+# 1. Clone o repositório
+git clone https://github.com/HugoBurch/Tela-de-login-com-React-Native
+cd Meu-primeiro-projeto
 
-## Learn more
+# 2. Instale as dependências
+npm install
 
-To learn more about developing your project with Expo, look at the following resources:
+# 3. Instale o AsyncStorage (caso ainda não esteja no projeto)
+npx expo install @react-native-async-storage/async-storage
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+# 4. Inicie o projeto (o -c limpa o cache)
+npx expo start -c
+```
 
-## Join the community
+Depois, escaneie o QR Code com o Expo Go ou abra em um emulador.
 
-Join our community of developers creating universal apps.
+## Como testar
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. Na tela de Login, tente entrar com qualquer dado. Deve dar erro, pois ainda não há usuários.
+2. Clique em **Cadastre-se** e crie uma conta.
+3. Você volta ao Login automaticamente. Entre com o usuário e a senha criados.
+4. Tente cadastrar o mesmo usuário ou e-mail de novo para ver o erro de duplicidade.
+
+## Conceitos praticados
+
+- Roteamento por arquivos com Expo Router
+- Componentização (uma tela = um componente)
+- Formulários controlados com `useState`
+- Navegação com `useRouter()`
+- Layout global com `_layout.js`
+- Persistência local com AsyncStorage
+- Funções assíncronas com `async/await` e `try/catch`
+
+## Extensões opcionais implementadas
+
+- [x] `_layout.js` para remover os cabeçalhos padrão
+- [x] Validação do formato do e-mail com regex
+- [x] Campo de confirmar senha no cadastro
+- [x] Usuários guardados no AsyncStorage e login validado contra essa lista
+
+## Observação
+
+As senhas são salvas em texto puro no AsyncStorage, o que é aceitável apenas para fins didáticos. Em um app real, seria necessário usar hash e um backend para autenticação.
+
+## Autor
+
+**Hugo Sérgio Burch Siqueira** — [github.com/seu-usuario](https://github.com/hugoburch)
