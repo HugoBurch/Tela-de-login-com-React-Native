@@ -100,4 +100,4 @@ As senhas são salvas em texto puro no AsyncStorage, o que é aceitável apenas 
 
 ## Autor
 
-**Hugo Sérgio Burch Siqueira** — [github.com/seu-usuario](https://github.com/hugoburch)
+**Hugo Sérgio Burch Siqueira** — [github.com/hugoburch](https://github.com/hugoburch)
